@@ -92,8 +92,18 @@ public class Main {
     private static void addNewStudent(Scanner scanner) {
         System.out.print("Enter student name: ");
         String name = scanner.nextLine();
-        System.out.print("Enter student ID: ");
-        int id = scanner.nextInt();
+        int id;
+
+        do {
+            System.out.print("Enter student ID: ");
+            id = scanner.nextInt();
+            scanner.nextLine(); // consume the newline character
+
+            if (isIdAlreadyUsed(id)) {
+                System.out.println("Student with this ID already exists. Please use a different ID.");
+            }
+        } while (isIdAlreadyUsed(id));
+
         System.out.print("Enter student age: ");
         int age = scanner.nextInt();
         System.out.print("Enter student grade: ");
@@ -105,7 +115,16 @@ public class Main {
         System.out.println("Student added successfully.");
     }
 
-      private static void updateStudentInformation(Scanner scanner) {
+    private static boolean isIdAlreadyUsed(int id) {
+        for (Student student : students) {
+            if (student.getId() == id) {
+                return true; // ID is already used
+            }
+        }
+        return false; // ID is unique
+    }
+  
+  private static void updateStudentInformation(Scanner scanner) {
       System.out.print("Enter student ID to update: ");
       int searchId = scanner.nextInt();
       int index = findStudentIndex(searchId);
@@ -142,7 +161,7 @@ public class Main {
                   System.out.print("Enter updated student age: ");
                   int updatedAge = scanner.nextInt();
                   scanner.nextLine(); // consume the newline character
-                  System.out.print("Enter updated student grade: ");
+                   System.out.print("Enter updated student grade: ");
                   double updatedGrade = scanner.nextDouble();
 
                   // Update all fields at once
