@@ -1,12 +1,14 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+// Student class to represent a student with name, ID, age, and grade
 class Student {
     private String name;
     private int id;
     private int age;
     private double grade;
 
+        // Constructor to initialize the student object
     public Student(String name, int id, int age, double grade) {
         this.name = name;
         this.id = id;
@@ -14,7 +16,7 @@ class Student {
         this.grade = grade;
     }
 
-    // Getters
+        // Getters to retrieve the values of private instance variables
     public String getName() {
         return name;
     }
@@ -31,7 +33,7 @@ class Student {
         return grade;
     }
 
-    // Setters
+       // Setters to update the values of private instance variables
     public void setName(String name) {
         this.name = name;
     }
@@ -49,15 +51,19 @@ class Student {
     }
 }
 
+// Main class containing the program logic
 public class Main {
-    private static ArrayList<Student> students = new ArrayList<>();
-    private static int totalStudents = 0;
+    private static ArrayList<Student> students = new ArrayList<>(); // List to store student objects
+    private static int totalStudents = 0; // Counter for the total number of students
 
+        // Main method where the program execution starts
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in); // Scanner for user input
         int choice;
 
+                // Do-while loop for the main menu until the user chooses to exit (option 6)
         do {
+                        // Displaying the main menu
             System.out.println("\nStudent Record Management System");
             System.out.println("1. Add New Student");
             System.out.println("2. Update Student Information");
@@ -67,9 +73,10 @@ public class Main {
             System.out.println("6. Exit");
             System.out.print("Enter your choice: ");
 
-            choice = scanner.nextInt();
+            choice = scanner.nextInt(); // User input for the menu choice
             scanner.nextLine(); // consume the newline character
 
+                        // Switch statement to perform actions based on the user's choice
             switch (choice) {
                 case 1:
                     addNewStudent(scanner);
@@ -92,16 +99,17 @@ public class Main {
                 default:
                     System.out.println("Invalid choice. Please enter a valid option.");
             }
-        } while (choice != 6);
+        } while (choice != 6); // Continue the loop until the user chooses to exit
 
-        scanner.close();
+        scanner.close(); // Close the scanner to prevent resource leak
     }
 
+        // Method to add a new student to the list
     private static void addNewStudent(Scanner scanner) {
         System.out.print("Enter student name: ");
         String name = scanner.nextLine();
         int id;
-
+        // Validate and ensure the uniqueness of the student ID
         do {
             System.out.print("Enter student ID: ");
             id = scanner.nextInt();
@@ -117,12 +125,14 @@ public class Main {
         System.out.print("Enter student grade: ");
         double grade = scanner.nextDouble();
 
+        // Create a new student object and add it to the list
         students.add(new Student(name, id, age, grade));
         totalStudents++;
 
         System.out.println("Student added successfully.");
     }
 
+    // Method to check if a student ID is already used
     private static boolean isIdAlreadyUsed(int id) {
         for (Student student : students) {
             if (student.getId() == id) {
@@ -132,12 +142,14 @@ public class Main {
         return false; // ID is unique
     }
   
+        // Method to update student information based on user input
   private static void updateStudentInformation(Scanner scanner) {
       System.out.print("Enter student ID to update: ");
       int searchId = scanner.nextInt();
       int index = findStudentIndex(searchId);
 
       if (index != -1) {
+                    // Display options to choose the field to update
           System.out.println("Choose the field to update:");
           System.out.println("1. Name");
           System.out.println("2. Age");
@@ -188,13 +200,14 @@ public class Main {
           System.out.println("Student ID not found.");
       }
   }
-
+    // Method to view details of a specific student based on user input
     private static void viewStudentDetails(Scanner scanner) {
         System.out.print("Enter student ID to view details: ");
         int searchId = scanner.nextInt();
         int index = findStudentIndex(searchId);
 
         if (index != -1) {
+                        // Display details of the selected student
             Student student = students.get(index);
             System.out.println("Student Details:");
             System.out.println("Name: " + student.getName());
@@ -205,24 +218,26 @@ public class Main {
             System.out.println("Student ID not found.");
         }
     }
-
+    // Method to view details of all students
     private static void viewAllStudents() {
       if (students.isEmpty()) {
           System.out.println("No students available. Please add students first.");
       } else {
+            // Display details (ID and name) of all students
           System.out.println("List of All Students:");
           for (Student student : students) {
               System.out.println("ID: " + student.getId() + ", Name: " + student.getName());
           }
       }
   }
-
+    // Method to delete a student based on user input
   private static void deleteStudent(Scanner scanner) {
       System.out.print("Enter student ID to delete: ");
       int deleteId = scanner.nextInt();
       int index = findStudentIndex(deleteId);
 
       if (index != -1) {
+        // Remove the selected student from the list
           students.remove(index);
           totalStudents--;
           System.out.println("Student deleted successfully.");
@@ -230,11 +245,11 @@ public class Main {
           System.out.println("Student ID not found. Deletion failed.");
       }
   }
-
+    // Method to find the index of a student in the list based on ID
     private static int findStudentIndex(int id) {
         for (int i = 0; i < students.size(); i++) {
             if (students.get(i).getId() == id) {
-                return i;
+                return i; // Return the index if the student is found
             }
         }
         return -1; // Not found
