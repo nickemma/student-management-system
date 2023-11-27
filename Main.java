@@ -105,20 +105,62 @@ public class Main {
         System.out.println("Student added successfully.");
     }
 
-    private static void updateStudentInformation(Scanner scanner) {
-        System.out.print("Enter student ID to update: ");
-        int searchId = scanner.nextInt();
-        int index = findStudentIndex(searchId);
+      private static void updateStudentInformation(Scanner scanner) {
+      System.out.print("Enter student ID to update: ");
+      int searchId = scanner.nextInt();
+      int index = findStudentIndex(searchId);
 
-        if (index != -1) {
-            System.out.print("Enter updated student grade: ");
-            double newGrade = scanner.nextDouble();
-            students.get(index).setGrade(newGrade);
-            System.out.println("Student information updated successfully.");
-        } else {
-            System.out.println("Student ID not found.");
-        }
-    }
+      if (index != -1) {
+          System.out.println("Choose the field to update:");
+          System.out.println("1. Name");
+          System.out.println("2. Age");
+          System.out.println("3. Grade");
+          System.out.println("4. Update All Fields");
+
+          int fieldChoice = scanner.nextInt();
+          scanner.nextLine(); // consume the newline character
+
+          switch (fieldChoice) {
+              case 1:
+                  System.out.print("Enter updated student name: ");
+                  String newName = scanner.nextLine();
+                  students.get(index).setName(newName);
+                  break;
+              case 2:
+                  System.out.print("Enter updated student age: ");
+                  int newAge = scanner.nextInt();
+                  students.get(index).setAge(newAge);
+                  break;
+              case 3:
+                  System.out.print("Enter updated student grade: ");
+                  double newGrade = scanner.nextDouble();
+                  students.get(index).setGrade(newGrade);
+                  break;
+              case 4:
+                  System.out.print("Enter updated student name: ");
+                  String updatedName = scanner.nextLine();
+                  System.out.print("Enter updated student age: ");
+                  int updatedAge = scanner.nextInt();
+                  scanner.nextLine(); // consume the newline character
+                  System.out.print("Enter updated student grade: ");
+                  double updatedGrade = scanner.nextDouble();
+
+                  // Update all fields at once
+                  Student student = students.get(index);
+                  student.setName(updatedName);
+                  student.setAge(updatedAge);
+                  student.setGrade(updatedGrade);
+                  break;
+              default:
+                  System.out.println("Invalid choice. No fields updated.");
+                  return;
+          }
+
+          System.out.println("Student information updated successfully.");
+      } else {
+          System.out.println("Student ID not found.");
+      }
+  }
 
     private static void viewStudentDetails(Scanner scanner) {
         System.out.print("Enter student ID to view details: ");
