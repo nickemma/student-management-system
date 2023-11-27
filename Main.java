@@ -62,7 +62,8 @@ public class Main {
             System.out.println("1. Add New Student");
             System.out.println("2. Update Student Information");
             System.out.println("3. View Student Details");
-            System.out.println("4. Exit");
+            System.out.println("4. View All Students");
+            System.out.println("5. Exit");
             System.out.print("Enter your choice: ");
 
             choice = scanner.nextInt();
@@ -79,6 +80,9 @@ public class Main {
                     viewStudentDetails(scanner);
                     break;
                 case 4:
+                    viewAllStudents();
+                    break;
+                case 5:
                     System.out.println("Exiting the program. Goodbye!");
                     break;
                 default:
@@ -197,6 +201,17 @@ public class Main {
             System.out.println("Student ID not found.");
         }
     }
+
+    private static void viewAllStudents() {
+      if (students.isEmpty()) {
+          System.out.println("No students available. Please add students first.");
+      } else {
+          System.out.println("List of All Students:");
+          for (Student student : students) {
+              System.out.println("ID: " + student.getId() + ", Name: " + student.getName());
+          }
+      }
+  }
 
     private static int findStudentIndex(int id) {
         for (int i = 0; i < students.size(); i++) {
