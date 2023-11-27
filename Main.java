@@ -63,7 +63,8 @@ public class Main {
             System.out.println("2. Update Student Information");
             System.out.println("3. View Student Details");
             System.out.println("4. View All Students");
-            System.out.println("5. Exit");
+            System.out.println("5. Delete A Student");
+            System.out.println("6. Exit");
             System.out.print("Enter your choice: ");
 
             choice = scanner.nextInt();
@@ -83,12 +84,15 @@ public class Main {
                     viewAllStudents();
                     break;
                 case 5:
+                    deleteStudent(scanner);
+                    break;
+                case 6:
                     System.out.println("Exiting the program. Goodbye!");
                     break;
                 default:
                     System.out.println("Invalid choice. Please enter a valid option.");
             }
-        } while (choice != 4);
+        } while (choice != 6);
 
         scanner.close();
     }
@@ -210,6 +214,20 @@ public class Main {
           for (Student student : students) {
               System.out.println("ID: " + student.getId() + ", Name: " + student.getName());
           }
+      }
+  }
+
+  private static void deleteStudent(Scanner scanner) {
+      System.out.print("Enter student ID to delete: ");
+      int deleteId = scanner.nextInt();
+      int index = findStudentIndex(deleteId);
+
+      if (index != -1) {
+          students.remove(index);
+          totalStudents--;
+          System.out.println("Student deleted successfully.");
+      } else {
+          System.out.println("Student ID not found. Deletion failed.");
       }
   }
 
